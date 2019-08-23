@@ -155,5 +155,7 @@ public class BasePage {
         Actions action = new Actions(driver);
         action.dragAndDrop(sourceElement, targetElement).perform();
     }
+
+    //test
 }
 
