@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+}
+
+group 'com.TemplateProject'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'io.rest-assured', name: 'rest-assured', version: '4.0.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.14.0'
+    compile group: 'org.testng', name: 'testng', version: '6.14.3'
+    compile group: 'com.relevantcodes', name: 'extentreports', version: '2.41.2'
+    compile group: 'javax.mail', name: 'mail', version: '1.4.1'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+}
+
+task allTests(type: Test) {
+    useTestNG() {
+        suites 'src/test/resources/launchIris.xml'
+        suites 'src/test/resources/Residuals.xml'
+    }
+}
+task restAssuredTest(type: Test) {
+    useTestNG() {
+        suites 'src/test/resources/RestAssuredTests.xml'
+    }
+}
+
+task chaosTests(type: Test){
+    useTestNG(){
+        suites 'src/test/resources/ChaosTests.xml'
+    }
+}
+
+task launchIrisCrm(type:Test){
+    useTestNG() {
+        suites 'src/test/resources/launchIris.xml'
+
+    }
+}
+
+task launchDemoCrmDialer(type:Test){
+    useTestNG() {
+        suites 'src/test/resources/Schedule_Demo_Crm_Dialer.xml'
+    }
+}
+
+task residualsTests(type:Test){
+    useTestNG() {
+        suites 'src/test/resources/Residuals.xml'
+    }
+}
+
+
+task uberJar(type: Jar) {
+    from sourceSets.main.output
+    from sourceSets.test.output
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Tests',
+                'Implementation-Version': version,
+                'Main-Class': 'Tests.Main_Tests_Run'
+    }
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+}
+
