@@ -59,6 +59,9 @@ public class BaseTest {
         //  driver.manage().window().setPosition(targetPosition);
         //   Dimension targetSize = new Dimension(1600, 1200); //your screen resolution here
         //  driver.manage().window().setSize(targetSize);
+
+
+        //testChanges Master
     }
 
     @BeforeClass
